@@ -332,12 +332,15 @@ def write_results(result_dptos, result_mode, result_nedif, filtClase, cod, codmp
         if True in args:
             print(args)
             if resumen_mpios is not None:
-                resumen_mpios = resumen_mpios.append(result_mode[result_mode["UA_CLASE"].isin(filtClase)].groupby(["U_MPIO", "UA_CLASE", "U_SECT_RUR", "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA"
+                result_mpios = result_mode[result_mode["UA_CLASE"].isin(filtClase)].groupby(["U_MPIO", "UA_CLASE", "U_SECT_RUR", "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA"
                                                      ]).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum'], 'THOM':['sum'], 'TMUJ':['sum'], 
                                                     'T00':['sum'], 'T05':['sum'], 'T10':['sum'], 'T15':['sum'], 'T20':['sum'], 
                                                     'T25':['sum'], 'T30':['sum'], 'T35':['sum'], 'T40':['sum'], 'T45':['sum'], 
                                                     'T50':['sum'], 'T55':['sum'], 'T60':['sum'], 'T65':['sum'], 'T70':['sum'], 
-                                                    'T75':['sum'], 'T80':['sum'], 'T85':['sum'], 'T90':['sum'], 'T95':['sum'], 'T100':['sum']}).reset_index(), 
+                                                    'T75':['sum'], 'T80':['sum'], 'T85':['sum'], 'T90':['sum'], 'T95':['sum'], 'T100':['sum']}).reset_index()
+                result_mpios["cod_Departamento"] = dptocod
+                result_mpios["cod_mpio"] = cod
+                resumen_mpios = resumen_mpios.append(result_mpios, 
                                                     ignore_index=True)
                                                                                                 
                 result_nedifstr = result_nedif[result_nedif["UA_CLASE"].isin(filtClase)].copy() 
