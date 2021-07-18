@@ -13,10 +13,6 @@ Features
 * Realizado con motivos académicos y de investigación sobre gestión del riesgo.
 * Ideado a partir del curso Ingeniería Sísmica de la Universidad EAFIT.
 
-
-Resultados de Inventario de edificaciones para Colombia
-================================================
-
 Modelo de exposición para Colombia
 --------
 Los resultados obtenidos para Colombia se pueden encontrar en **results** que consiste en cinco archivos:
