@@ -4,6 +4,12 @@ Este programa se desarrolló con el  propósito  del  artículo (Inventario  de 
 
 - Descarga de datos del CNPV 2018: http://microdatos.dane.gov.co/index.php/catalog/643/get_microdata
 
+Ejecución
+--------
+
+En la carpeta **folder** se encuentra el archivo `inventario.py`. En este archivo de python se ejemplifica el uso de los módulos para obtener un inventario detallado de las edificaciones de uno o múltiples municipios. El archivo `modelo_exposicion.py` por otro lado, hace uso de los módulos para obtener la matriz de tipologías por municipio. Se puede profundizar más en el funcionamiento de los diferentes módulos, modo y opciones de ejecución en la documentación que se puede encontrar en (xxxx).
+
+
 Features
 --------
 
