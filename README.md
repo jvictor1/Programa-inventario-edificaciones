@@ -21,7 +21,7 @@ Features
 
 Modelo de exposición para Colombia
 --------
-Los resultados obtenidos para Colombia se pueden encontrar en **results** que consiste en cinco archivos:
+Los principales resultados obtenidos para Colombia se pueden encontrar en **results** que consiste en el inventario de edificaciones y en el modelo de exposición:
 
 * Número de edificaciones y personas por municipio.
 * Número de edificaciones y personas por combinación de materiales de pared, piso y tipo de vivienda por municipio.
