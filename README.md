@@ -24,7 +24,7 @@ Inventario de edificaciones y Modelo de exposición de Colombia
 Los principales resultados obtenidos para Colombia se pueden encontrar en **results** que consiste en el inventario de edificaciones y en el modelo de exposición:
 
 * Inventario de edificaciones y personas por municipio además del análisis que incluye el cálculo de la densidad pob/edif.
-* Número de edificaciones y personas material de pared por municipio.
+* Número de edificaciones y personas por material de pared por municipio.
 * Número de edificaciones y personas por combinación de materiales de pared, piso y tipo de vivienda por municipio.
 * Matriz de taxonomía por municipio.
 * Matriz de taxonomía disgregada por combinación de materiales de pared, piso y tipo de vivienda por municipio.
