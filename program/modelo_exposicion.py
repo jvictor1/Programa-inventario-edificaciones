@@ -14,8 +14,8 @@ Created on Mon Aug  9 09:57:20 2021
 import pros_taxonomy as tax
 import utilities as ut
 
-mapping_path = r'D:\Universidad\[10]Décimo Semestre\Ingeniería Sísmica\Procesamiento datos del censo\Mapping/Mapping_ANA_220321_modificado.xlsx' #ruta a archivo de mapping
-result_path = r'D:\Universidad\[10]Décimo Semestre\Ingeniería Sísmica\Procesamiento datos del censo\GitHub\program/output_combinacionesColombiaRural.csv' #ruta a archivo con los resultados de número de edificaciones por combinación
+mapping_path = r'D:/Esquema_clasificacion_181021_3.xlsx' #ruta a archivo de mapping
+result_path = r'D:\Universidad\[10]Décimo Semestre\Ingeniería Sísmica\Procesamiento datos del censo\GitHub\program/santander_ESTR.csv' #ruta a archivo con los resultados de número de edificaciones por combinación
 
 
 # deptcod = ['68']
@@ -38,13 +38,14 @@ exe_subdivi = False #True: se ejecuta a nivel manzana
 #%% Ejecución cálculo de matriz de tipologías
 exclude = [5001, 11001, 76001] #Se excluyen Medellín, Bogotá y Cali
 
-conteo_mpios, mpios_list, mapping_list, mapping, detailed_1, detailed_2 = tax.read_input(mapping_path, result_path)
+conteo_mpios, mpios_list, mapping_list, mapping, detailed_1, detailed_2 = tax.read_input(mapping_path, result_path, mza=exe_subdivi)
 
 tipologias, tiporesumen = tax.taxonomy(conteo_mpios, mpios_list, mapping_list, mapping, detailed_1, detailed_2, deptcod, exclude, mza=exe_subdivi)
 
 #%% Agregar tipologías por # pisos
 
 tipologias_agg = ut.aggregate(tipologias)
+
 tipo_aggregate = ut.aggregate(tiporesumen)
 
 #%% Save

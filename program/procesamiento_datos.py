@@ -30,29 +30,39 @@ def cambio_variable(var, idx):
         Returns the corresponding string value from specified variable.
 
     """
-    TVIV = {0: 'Sin información',
+    TVIV = {0: 'Sin informacion',
             1: 'Casa',
             2: 'Apartamento',
             3: 'Tipo Cuarto'}
     
-    MPARED = {0: 'Sin información',
+    MPARED = {0: 'Sin informacion',
               1: 'Bloque, ladrillo, piedra, madera pulida',
               2: 'Concreto vaciado',
               3: 'Material prefabricado',
               4: 'Guadua',
               5: 'Tapia pisada, bahareque, adobe',
-              6: 'Madera burda, tabla, tablón',
-              7: 'Caña, esterilla, otros vegetales',
-              8: 'Madera burda, tabla, tablón, otro vegetal',
+              6: ' Madera burda, tabla, tablon',
+              7: 'Cana, esterilla, otros vegetales',
+              8: 'Materiales de deshecho (Zinc, tela, carton, latas, plasticos, otros)',
               9: 'No tiene paredes'}
     
-    MPISO = {0: 'Sin información',
-             1: 'Mármol, parqué, madera pulida y lacada',
+    MPISO = {0: 'Sin informacion',
+             1: 'Marmol, parque, madera pulida y lacada',
              2: 'Baldosa, vinilo, tableta, ladrillo, laminado',
              3: 'Alfombra',
              4: 'Cemento, gravilla',
-             5: 'Madera burda, tabla, tablón, otro vegetal',
+             5: 'Madera burda, tabla, tablon, otro vegetal',
              6: 'Tierra, arena, barro'}
+    
+    ESTTO = {0: 'Sin Estrato',
+             1: 'Estrato 1',
+             2: 'Estrato 2',
+             3: 'Estrato 3',
+             4: 'Estrato 4',
+             5: 'Estrato 5',
+             6: 'Estrato 6',
+             9: 'No sabe el estrato',
+             10: 'Sin informacion'}
 
     
     if var == 'V_TIPO_VIV_VS1':
@@ -66,6 +76,11 @@ def cambio_variable(var, idx):
     elif var == 'V_MAT_PISO_VS1':
         
         return MPISO[idx]
+    
+    elif var == 'VA1_ESTRATO_VS1':
+        
+        return ESTTO[idx]
+    
     
 def func_mode(x):
     """
@@ -297,7 +312,7 @@ def groupby_mode(result, *args):
         if True in args:
             result_mode = result.groupby(["U_MPIO", "UA_CLASE", "U_SECT_RUR", "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA",\
                                 "U_EDIFICA"]).agg({'THOG':['sum'], 'TPER':['sum'], 'V_MAT_PARED': func_mode,
-                                      'V_MAT_PISO': func_mode, 'V_TIPO_VIV': func_mode_tviv, 'THOM':['sum'], 'TMUJ':['sum'], 
+                                      'V_MAT_PISO': func_mode, 'V_TIPO_VIV': func_mode_tviv, 'VA1_ESTRATO':func_mode, 'THOM':['sum'], 'TMUJ':['sum'], 
                                       'T00':['sum'], 'T05':['sum'], 'T10':['sum'], 'T15':['sum'], 'T20':['sum'], 
                                       'T25':['sum'], 'T30':['sum'], 'T35':['sum'], 'T40':['sum'], 'T45':['sum'], 
                                       'T50':['sum'], 'T55':['sum'], 'T60':['sum'], 'T65':['sum'], 'T70':['sum'], 
@@ -305,7 +320,7 @@ def groupby_mode(result, *args):
                                                    
             result_mode.columns = result_mode.columns.get_level_values(0)                                     
             result_nedif = result_mode.groupby(["U_MPIO", "UA_CLASE", "U_SECT_RUR", "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA", "V_MAT_PARED",\
-                                                "V_MAT_PISO", "V_TIPO_VIV"]).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum'], 'THOM':['sum'], 'TMUJ':['sum'], 
+                                                "V_MAT_PISO", "V_TIPO_VIV", 'VA1_ESTRATO']).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum'], 'THOM':['sum'], 'TMUJ':['sum'], 
                                                 'T00':['sum'], 'T05':['sum'], 'T10':['sum'], 'T15':['sum'], 'T20':['sum'], 
                                                 'T25':['sum'], 'T30':['sum'], 'T35':['sum'], 'T40':['sum'], 'T45':['sum'], 
                                                 'T50':['sum'], 'T55':['sum'], 'T60':['sum'], 'T65':['sum'], 'T70':['sum'], 
@@ -314,17 +329,17 @@ def groupby_mode(result, *args):
         else:
                  
             result_mode = result.groupby(["U_MPIO", "UA_CLASE", "U_SECT_RUR", "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA",\
-                                   "U_EDIFICA"]).agg({'THOG':['sum'], 'TPER':['sum'],"V_MAT_PARED": func_mode,
-                                       "V_MAT_PISO": func_mode, 'V_TIPO_VIV': func_mode_tviv}).reset_index()
+                                   "U_EDIFICA"]).agg({'THOG':['sum'], 'TPER':['sum'], "V_MAT_PARED": func_mode,
+                                       "V_MAT_PISO": func_mode, 'V_TIPO_VIV': func_mode_tviv, 'VA1_ESTRATO': func_mode}).reset_index()
                                                       
             result_mode.columns = result_mode.columns.get_level_values(0) 
         
             result_nedif = result_mode.groupby(["U_MPIO", "UA_CLASE", "V_MAT_PARED",\
-                                    "V_MAT_PISO", 'V_TIPO_VIV']).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum']}).reset_index()                                                                      
+                                    "V_MAT_PISO", 'V_TIPO_VIV', 'VA1_ESTRATO']).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum']}).reset_index()                                                                      
             result_nedif.columns = result_nedif.columns.get_level_values(0)
-    except:
-
-        pass                        
+    except Exception as e:
+        print(e)
+        pass
 
     return result_mode, result_nedif
 
@@ -367,7 +382,8 @@ def write_results(result_dptos, result_mode, result_nedif, filtClase, cod, codmp
         if True in args:
             
             if resumen_mpios is not None:
-                resumen_mpios = resumen_mpios.append(result_mode[result_mode["UA_CLASE"].isin(filtClase)].groupby(["U_MPIO", "UA_CLASE", "U_SECT_RUR", "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA"
+                resumen_mpios = resumen_mpios.append(result_mode[result_mode["UA_CLASE"].isin(filtClase)].groupby(["U_MPIO", "UA_CLASE", "U_SECT_RUR", 
+                                                                                                                   "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA"
                                                      ]).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum'], 'THOM':['sum'], 'TMUJ':['sum'], 
                                                     'T00':['sum'], 'T05':['sum'], 'T10':['sum'], 'T15':['sum'], 'T20':['sum'], 
                                                     'T25':['sum'], 'T30':['sum'], 'T35':['sum'], 'T40':['sum'], 'T45':['sum'], 
@@ -380,7 +396,7 @@ def write_results(result_dptos, result_mode, result_nedif, filtClase, cod, codmp
         else:
             result_mode = result_mode[result_mode["UA_CLASE"].isin(filtClase)]
             result_nedif = result_mode.groupby(["U_MPIO", "V_MAT_PARED",\
-                                    "V_MAT_PISO", 'V_TIPO_VIV']).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum']}).reset_index()                                                                      
+                                    "V_MAT_PISO", 'V_TIPO_VIV', 'VA1_ESTRATO']).agg({"U_EDIFICA": ['count'], 'TPER':['sum'], 'THOG':['sum']}).reset_index()                                                                      
             result_nedif.columns = result_nedif.columns.get_level_values(0)
             
             result_nedifstr = result_nedif.copy()
@@ -390,23 +406,25 @@ def write_results(result_dptos, result_mode, result_nedif, filtClase, cod, codmp
         pass
     
     #%%
-    for i, row in result_nedifstr.iterrows():
+    
+    result_nedifstr.insert(0, 'cod', cod)
+    
+    if len(result_nedif) != 0:
+    
+        result_nedifstr.loc[:, "No. total edificaciones"] = result_nedif['U_EDIFICA'].sum()
         
-        matpared = int(row["V_MAT_PARED"])
-        matpiso  = int(row["V_MAT_PISO"])
-        tvivienda  = int(row["V_TIPO_VIV"])
+        result_nedifstr.loc[:, 'V_MAT_PARED'] = \
+            result_nedifstr.loc[:, 'V_MAT_PARED'].apply(lambda x: cambio_variable('V_MAT_PARED_VS1', int(x))).to_list()
+    
+        result_nedifstr.loc[:, 'V_MAT_PISO'] = \
+            result_nedifstr.loc[:, 'V_MAT_PISO'].apply(lambda x: cambio_variable('V_MAT_PISO_VS1', int(x))).to_list()
+    
+        result_nedifstr.loc[:, 'V_TIPO_VIV'] = \
+            result_nedifstr.loc[:, 'V_TIPO_VIV'].apply(lambda x: cambio_variable('V_TIPO_VIV_VS1', int(x))).to_list()
+    
+        result_nedifstr.loc[:, 'VA1_ESTRATO'] = \
+            result_nedifstr.loc[:, 'VA1_ESTRATO'].apply(lambda x: cambio_variable('VA1_ESTRATO_VS1', int(x))).to_list()
         
-        mpisostr = cambio_variable('V_MAT_PISO_VS1', matpiso)
-        mparedstr = cambio_variable('V_MAT_PARED_VS1', matpared)
-        tviviendastr = cambio_variable('V_TIPO_VIV_VS1', tvivienda)
-        
-        result_nedifstr.loc[i, "Departamento"] = dptocod
-        result_nedifstr.loc[i, "U_MPIO"] = codmpio
-        result_nedifstr.loc[i, "COD"] = cod
-        result_nedifstr.loc[i, "V_MAT_PARED"] = mparedstr
-        result_nedifstr.loc[i, "V_MAT_PISO"] = mpisostr
-        result_nedifstr.loc[i, "No. total edificaciones"] = result_nedif['U_EDIFICA'].sum()
-        result_nedifstr.loc[i, "V_TIPO_VIV"] = tviviendastr
         
     result_dptos = result_dptos.append(result_nedifstr, ignore_index=True)
     
@@ -538,7 +556,7 @@ def func_principal(folder_path, deptcod, deptname, filtClase, filtUnidad, filtVi
 
                 #%% MGV, VIV, PER dataframes are merged.
                     
-                dfs = [vivestudio[["COD_ENCUESTAS", "V_MAT_PARED", "V_MAT_PISO", 'V_TIPO_VIV']],
+                dfs = [vivestudio[["COD_ENCUESTAS", "V_MAT_PARED", "V_MAT_PISO", 'V_TIPO_VIV', 'VA1_ESTRATO']],
                        mgnestudio[["COD_ENCUESTAS", "U_MPIO", "UA_CLASE", "U_SECT_RUR", "U_SECC_RUR", "UA2_CPOB", "U_SECT_URB", "U_SECC_URB", "U_MZA", \
                                   "U_EDIFICA", "COD_DANE_ANM"]],                   
                            personas]
@@ -580,9 +598,9 @@ def func_principal(folder_path, deptcod, deptname, filtClase, filtUnidad, filtVi
                               'V_MAT_PARED': 'Material Pared',\
                               'V_MAT_PISO': 'Material Piso',
                               'V_TIPO_VIV': 'Tipo Vivienda',
-                              'U_EDIFICA': 'No. edificaciones'})
+                              'U_EDIFICA': 'No. edificaciones',
+                              'VA1_ESTRATO': 'Estrato'})
     
-    result_dptos = ut.changetilde(result_dptos)
     
     end = time.time()
     print('Ended in {}'.format(end-start))

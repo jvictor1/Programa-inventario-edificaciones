@@ -18,11 +18,11 @@ import utilities as ut
 ruta_carpetas = r'D:\Universidad\[10]Décimo Semestre\Ingeniería Sísmica\Procesamiento datos del censo\Departamentos'     # ruta con las carpetas de las bases de datos
 
 
-deptcod = ['68']
-deptname = ['Santander']
+# deptcod = ['68']
+# deptname = ['Santander']
 
-# deptcod = ['05']
-# deptname = ['Antioquia']
+deptcod = ['91']
+deptname = ['Amazonas']
 
 
 # deptcod = ['05', '08', '11', '13', '15', '17', '18', '19', '20', '23', '25', '27', '41',

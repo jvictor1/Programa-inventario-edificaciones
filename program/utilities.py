@@ -17,9 +17,9 @@ def nvalxmat(csv, col, val):
     csv : pandas DataFrame
         CSV file which contains number of buildings by material combination.
     col : string
-        maybe any of "Material Pared", "Material Piso", "Tipo Vivienda".
+        may be any of "Material Pared", "Material Piso", "Tipo Vivienda".
     val : string
-        maybe any of "No. edificaciones", "TPER", "THOG".
+        may be any of "No. edificaciones", "TPER", "THOG".
 
     Returns
     -------
@@ -95,7 +95,7 @@ def cutstr(string):
         name = string
     return name
 
-def aggregate(tipo, mza=False):
+def aggregate(tipo):
     """
     Aggregates typologies by all number of storeys.
 
@@ -106,26 +106,25 @@ def aggregate(tipo, mza=False):
 
     Returns
     -------
-    data_unique : pandas DataFrame
+    tipoagg : pandas DataFrame
         DataFrame with number of buildings by typology aggregated by number of storeys.
     """
-    idx = tipo.columns.get_loc('ADO|EU/LWAL+DNO/H:1')
-    colnames = tipo.columns.tolist()
-    tiponames = tipo.columns.tolist()
-    for i in range(len(colnames[idx:])):
-        colnames[i+idx] = cutstr(colnames[i+idx])
-        
-    colnames = list(dict.fromkeys(colnames))
+    tipoaggu = tipo.copy()
+    idx = tipoaggu.columns.get_loc('ADO|EU/LWAL+DNO/H:1')
     
-    data_unique = tipo.copy()
-    data_unique = data_unique.drop(tiponames[idx:], axis=1)
-    data_unique[colnames[idx:]] = 0
-    for col in colnames[idx:]:
-        for k, row in tipo.iterrows():
-            for j in tiponames[idx:]:
-                if col == cutstr(j):
-                    data_unique.loc[k, col] = data_unique.loc[k, col] + row[j]
-    return data_unique
+    colnames = tipoaggu.columns[idx:].tolist()
+    nnames = {}
+    for name in colnames:
+        nnames[name]  = cutstr(name)
+    
+    tipoaggu.rename(nnames, axis=1,
+                      inplace=True)
+    
+    tipoaggr=tipoaggu.iloc[:,idx:].groupby(tipoaggu.columns[idx:], axis=1).sum()
+    
+    tipoagg = pd.merge(tipoaggu.iloc[:,:idx], tipoaggr, left_index=True, right_index=True)
+    
+    return tipoagg
 
 colorlist = ["forestgreen",
              "darkorange",
