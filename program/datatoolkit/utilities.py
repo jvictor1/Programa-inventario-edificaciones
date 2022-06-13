@@ -2,7 +2,10 @@
 """
 Created on Wed Jul  7 11:50:34 2021
 
-@author: Juan Camilo Victoria & Santiago Sepúlveda
+    @author: Juan Camilo Victoria & Santiago Sepúlveda
+    
+    Módulo con funciones varias
+    
 """
 
 import pandas as pd
