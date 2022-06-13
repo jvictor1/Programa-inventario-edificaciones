@@ -38,7 +38,7 @@ from datatoolkit import ProcessTheData
 
 #%% Ejemplo del uso de la clase ProcessTheData
 
-folder_path = r'/'     # ruta con las carpetas de las bases de datos por ejemplo 99Vichada
+folder_path = r'/Users/juancamilo/Proyectos/'     # ruta con las carpetas de las bases de datos por ejemplo 99Vichada
 
 #%% Input Options
 

@@ -29,6 +29,7 @@ Created on Fri Oct 16 13:49:23 2020
 import pandas as pd
 import numpy as np
 import time
+import os
 import datatoolkit.utilities as ut
 from datatoolkit.departamentos import Departamentos
 
@@ -130,7 +131,7 @@ class Taxonomy(Departamentos):
         """
         mapping_ana = pd.ExcelFile(self.mapping_path)
         conteo_mpios = pd.read_csv(self.inventory_path)
-        mpios_list = pd.read_csv(r'mpios_list.csv', encoding='ISO-8859-1')
+        mpios_list = pd.read_csv(os.path.dirname(ut.__file__) + '/mpios_list.csv', encoding='ISO-8859-1')
         
         mapping_list = pd.read_excel(mapping_ana, sheet_name="mapping_list")
         mapping = pd.read_excel(mapping_ana, sheet_name="mapping")

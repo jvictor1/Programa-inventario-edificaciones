@@ -31,6 +31,7 @@ import numpy as np
 import pandas as pd
 import time
 from functools import reduce
+import os
 import datatoolkit.utilities as ut
 from datatoolkit.departamentos import Departamentos
 
@@ -270,7 +271,7 @@ class ProcessTheData(Departamentos):
             viv_list.append(pd.read_csv(filepath + f_viv))
             per_list.append(pd.read_csv(filepath + f_per))
         
-        mpios_list = pd.read_csv("mpios_list.csv", encoding="ISO-8859-1")
+        mpios_list = pd.read_csv(os.path.dirname(ut.__file__) + '/mpios_list.csv', encoding="ISO-8859-1")
         
         return mgn_list, viv_list, per_list, mpios_list
 
